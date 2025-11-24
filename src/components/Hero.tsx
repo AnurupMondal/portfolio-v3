@@ -67,7 +67,7 @@ const Hero: React.FC = () => {
     return (
         <section id="home" className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-12">
 
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none z-0" />
+
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">

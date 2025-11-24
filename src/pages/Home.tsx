@@ -8,7 +8,7 @@ import Contact from '../components/Contact';
 
 const Home: React.FC = () => {
     return (
-        <div className="bg-background">
+        <div>
             <Hero />
             <Skills />
             <Experience />
