@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import MusicPlayer from "../components/common/MusicPlayer";
 
 const Layout: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const Layout: React.FC = () => {
       <div className="relative z-10">
         <Footer />
       </div>
+      <MusicPlayer />
     </div>
   );
 };

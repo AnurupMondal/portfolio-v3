@@ -37,7 +37,14 @@
     },
     {
       "title": "Tools & Others",
-      "skills": ["Git", "Docker", "AWS", "Vite", "Figma", "VS Code"]
+      "skills": [
+        "Git",
+        "Docker",
+        "AWS",
+        "Vite",
+        "Figma",
+        "VS Code"
+      ]
     }
   ],
   "projects": [
@@ -45,7 +52,13 @@
       "id": 1,
       "title": "ECI Results 2024",
       "description": "Developed a Docker application using Python web scraping with Fast-API and Redis for backend and database respectively.",
-      "tech": ["Python", "FastAPI", "Redis", "Docker", "Web Scraping"],
+      "tech": [
+        "Python",
+        "FastAPI",
+        "Redis",
+        "Docker",
+        "Web Scraping"
+      ],
       "link": "#",
       "github": "https://github.com/AnurupMondal/ECI-Results",
       "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -54,7 +67,10 @@
       "id": 2,
       "title": "IIT Hall Management System",
       "description": "Developed a hall management system for efficient administration.",
-      "tech": ["Web Development", "Database Management"],
+      "tech": [
+        "Web Development",
+        "Database Management"
+      ],
       "link": "#",
       "github": "https://github.com/AnurupMondal/IIT-HMS",
       "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -63,59 +79,94 @@
       "id": 3,
       "title": "Software Defined Networks",
       "description": "Developed a software-based networking approach using controllers or APIs to manage network traffic and communicate with the hardware infrastructure.",
-      "tech": ["Software Defined Networks", "Network Controllers", "APIs"],
+      "tech": [
+        "Software Defined Networks",
+        "Network Controllers",
+        "APIs"
+      ],
       "link": "#",
       "github": "https://github.com/AnurupMondal/software-defined-networks",
       "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
   ],
   "experience": [
-  {
-    "id": 1,
-    "company": "SMS India Pvt. Ltd.",
-    "role": "OPCUA App Intern",
-    "period": "2024",
-    "description": "Developed an OPCUA Server using NodeJS and PostgreSQL for efficient data handling and real-time monitoring.",
-    "technologies": ["Node.js", "PostgreSQL", "OPCUA"],
-    "type": "internship"
-  },
-  {
-    "id": 2,
-    "company": "SMS India Pvt. Ltd.",
-    "role": "graphApp Intern",
-    "period": "2024",
-    "description": "Created a Docker application using NodeJS, PostgreSQL, and React to display real-time sensor data on graphs, including historical data visualization.",
-    "technologies": ["Node.js", "PostgreSQL", "React", "Docker"],
-    "type": "internship"
-  },
-  {
-    "id": 3,
-    "company": "NIT Rourkela",
-    "role": "Research Project",
-    "period": "2023-2024",
-    "description": "Developed a software-based networking approach using controllers or APIs to manage network traffic and communicate with the hardware infrastructure.",
-    "technologies": ["Software Defined Networks", "Network Controllers", "APIs"],
-    "type": "research"
-  },
-  {
-    "id": 4,
-    "company": "Searce",
-    "role": "SDE Intern",
-    "period": "2024–2025",
-    "description": "Completed a 6-month internship contributing to the development of the BancNet App. Worked on full-stack features including document management, secure file sharing, audit logging, versioning, and cloud integrations.",
-    "technologies": ["React", "Node.js", "TypeScript", "MongoDB", "AWS", "GCP", "Docker"],
-    "type": "internship"
-  },
-  {
-    "id": 5,
-    "company": "Searce",
-    "role": "Software Development Engineer",
-    "period": "2025 – Present",
-    "description": "Working full-time on production-grade distributed systems and scalable applications. Responsible for designing and developing high-performance services, improving cloud-agnostic architecture (AWS/GCP), and enhancing the BancNet platform.",
-    "technologies": ["Node.js", "React", "TypeScript", "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "AWS", "GCP"],
-    "type": "full-time"
-  }
-],
+    {
+      "id": 1,
+      "company": "SMS India Pvt. Ltd.",
+      "role": "OPCUA App Intern",
+      "period": "2024",
+      "description": "Developed an OPCUA Server using NodeJS and PostgreSQL for efficient data handling and real-time monitoring.",
+      "technologies": [
+        "Node.js",
+        "PostgreSQL",
+        "OPCUA"
+      ],
+      "type": "internship"
+    },
+    {
+      "id": 2,
+      "company": "SMS India Pvt. Ltd.",
+      "role": "graphApp Intern",
+      "period": "2024",
+      "description": "Created a Docker application using NodeJS, PostgreSQL, and React to display real-time sensor data on graphs, including historical data visualization.",
+      "technologies": [
+        "Node.js",
+        "PostgreSQL",
+        "React",
+        "Docker"
+      ],
+      "type": "internship"
+    },
+    {
+      "id": 3,
+      "company": "NIT Rourkela",
+      "role": "Research Project",
+      "period": "2023-2024",
+      "description": "Developed a software-based networking approach using controllers or APIs to manage network traffic and communicate with the hardware infrastructure.",
+      "technologies": [
+        "Software Defined Networks",
+        "Network Controllers",
+        "APIs"
+      ],
+      "type": "research"
+    },
+    {
+      "id": 4,
+      "company": "Searce",
+      "role": "SDE Intern",
+      "period": "2024–2025",
+      "description": "Completed a 6-month internship contributing to the development of the BancNet App. Worked on full-stack features including document management, secure file sharing, audit logging, versioning, and cloud integrations.",
+      "technologies": [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "MongoDB",
+        "AWS",
+        "GCP",
+        "Docker"
+      ],
+      "type": "internship"
+    },
+    {
+      "id": 5,
+      "company": "Searce",
+      "role": "Software Development Engineer",
+      "period": "2025 – Present",
+      "description": "Working full-time on production-grade distributed systems and scalable applications. Responsible for designing and developing high-performance services, improving cloud-agnostic architecture (AWS/GCP), and enhancing the BancNet platform.",
+      "technologies": [
+        "Node.js",
+        "React",
+        "TypeScript",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "GCP"
+      ],
+      "type": "full-time"
+    }
+  ],
   "contact": {
     "title": "Let's work together!",
     "description": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!",
@@ -181,5 +232,10 @@
       "link": "https://drive.google.com/file/d/1ruK9Ji0KTCyMEcNbX2Gi2jr-75uu6346/view?usp=sharing",
       "image": "https://images.unsplash.com/photo-1589330694653-4a8b243aaf96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
     }
-  ]
+  ],
+  "music": {
+    "enabled": true,
+    "autoplay": true,
+    "musicUrl": "https://open.spotify.com/playlist/4AMOseG34i39r93OWpozGd?si=1fb2bae202734221"
+  }
 }
