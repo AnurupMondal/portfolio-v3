@@ -18,11 +18,14 @@ const Navbar: React.FC = () => {
     { name: "Skills", path: "/#skills", id: "skills" },
     { name: "Experience", path: "/#experience", id: "experience" },
     { name: "Projects", path: "/#projects", id: "projects" },
+    { name: "Resume", path: "/#resume", id: "resume" },
     { name: "Contact", path: "/#contact", id: "contact" },
   ];
 
+  // Only use scroll spy on the home page
+  const isOnHomePage = location.pathname === "/" || location.pathname === "/portfolio-v3" || location.pathname === "/portfolio-v3/";
   const activeId = useScrollSpy(
-    navLinks.map((link) => link.id),
+    isOnHomePage ? navLinks.map((link) => link.id) : [],
     100
   );
 
@@ -42,7 +45,11 @@ const Navbar: React.FC = () => {
     e.preventDefault();
     setIsOpen(false);
 
-    if (location.pathname !== "/") {
+    // Check if we're on the resume page
+    const isOnResumePage = location.pathname.includes('/resume');
+
+    if (isOnResumePage || location.pathname !== "/") {
+      // Navigate to home first, then scroll
       navigate("/");
       setTimeout(() => {
         const element = document.getElementById(id);
@@ -51,6 +58,7 @@ const Navbar: React.FC = () => {
         }
       }, 100);
     } else {
+      // Already on home page, just scroll
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
@@ -63,8 +71,8 @@ const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-white/10 dark:border-white/10 border-black/5 py-2"
-          : "bg-transparent py-4"
+        ? "bg-background/80 backdrop-blur-md border-b border-white/10 dark:border-white/10 border-black/5 py-2"
+        : "bg-transparent py-4"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,8 +94,8 @@ const Navbar: React.FC = () => {
                 href={link.path}
                 onClick={(e) => handleLinkClick(e, link.path, link.id)}
                 className={`text-sm font-medium transition-colors hover:text-primary relative ${activeId === link.id
-                    ? "text-primary"
-                    : "text-gray-600 dark:text-gray-300"
+                  ? "text-primary"
+                  : "text-gray-600 dark:text-gray-300"
                   }`}
               >
                 {link.name}
@@ -161,8 +169,8 @@ const Navbar: React.FC = () => {
                   href={link.path}
                   onClick={(e) => handleLinkClick(e, link.path, link.id)}
                   className={`block px-3 py-2 rounded-md text-base font-medium ${activeId === link.id
-                      ? "text-primary bg-primary/10 dark:bg-white/5"
-                      : "text-foreground dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
+                    ? "text-primary bg-primary/10 dark:bg-white/5"
+                    : "text-foreground dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
                     }`}
                 >
                   {link.name}

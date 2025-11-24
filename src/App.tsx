@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
 import Layout from "./layout/Layout";
 import Home from "./pages/Home";
+import ResumePage from "./pages/ResumePage";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/common/ScrollToTop";
 import CursorBackground from "./components/common/CursorBackground";
@@ -46,6 +47,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="resume" element={<ResumePage />} />
             {/* Future routes: Projects, About, Contact */}
             <Route path="*" element={<NotFound />} />
           </Route>

@@ -1,0 +1,157 @@
+{
+    "header": {
+        "name": "Anurup Chandra Mondal",
+        "title": "B.Tech. | NIT Rourkela",
+        "subtitle": "Computer Science & Engineering",
+        "dob": "14 March 2003",
+        "contact": {
+            "phone": "+91 9007263098",
+            "email": "anurup.mondal75@gmail.com"
+        }
+    },
+    "education": [
+        {
+            "degree": "B.Tech. in CSE",
+            "institution": "NIT Rourkela, Odisha",
+            "period": "2021-2025",
+            "score": "CGPA: 7.05/10"
+        },
+        {
+            "degree": "High School",
+            "institution": "Delhi Public School, Ruby Park, Kolkata",
+            "period": "2019-2021",
+            "score": "Percentage: 84.4%"
+        },
+        {
+            "degree": "Junior School",
+            "institution": "Garden High School, Kolkata",
+            "period": "2009-2019",
+            "score": "Percentage: 93.6%"
+        }
+    ],
+    "links": [
+        {
+            "name": "GitHub",
+            "username": "Anurup_Mondal",
+            "url": "https://github.com/AnurupMondal"
+        },
+        {
+            "name": "LinkedIn",
+            "username": "Anurup_Mondal",
+            "url": "https://www.linkedin.com/in/anurup-mondal"
+        },
+        {
+            "name": "LeetCode",
+            "username": "Anurup_Mondal",
+            "url": "https://leetcode.com/anurup75"
+        }
+    ],
+    "skills": {
+        "programmingLanguages": [
+            "C",
+            "C++",
+            "Python",
+            "Java",
+            "Matlab",
+            "Web Development (Full Stack)"
+        ],
+        "operatingSystems": [
+            "Windows",
+            "Linux"
+        ],
+        "software": [
+            "Matlab"
+        ],
+        "languages": [
+            "English",
+            "Hindi",
+            "Bengali"
+        ]
+    },
+    "relevantCourses": [
+        "Data Structures",
+        "PostgreSQL",
+        "Computer Networks",
+        "Operating Systems",
+        "Optimisation Techniques"
+    ],
+    "experienceAndProjects": [
+        {
+            "title": "Research Project at NIT Rourkela",
+            "role": "Software Defined Networks",
+            "period": "2023-2024",
+            "description": "Developed a software-based networking approach using controllers or APIs to manage network traffic and communicate with the hardware infrastructure.",
+            "github": {
+                "name": "software-defined-networks",
+                "url": "https://github.com/AnurupMondal/Software-defined-networks.git"
+            }
+        },
+        {
+            "title": "ECI Results 2024",
+            "role": "Docker Application using Web Scraping",
+            "period": "2024-2024",
+            "description": "Developed a Docker application using Python web scraping with Fast-API and Redis for backend and database respectively.",
+            "github": {
+                "name": "ECI Results",
+                "url": "https://github.com/AnurupMondal/eciResults_data_collector_2024"
+            }
+        },
+        {
+            "title": "OPCUA App",
+            "role": "Internship at SMS India Pvt. Ltd.",
+            "period": "2024-2024",
+            "description": "Developed an OPCUA Server using NodeJS and PostgreSQL for efficient data handling and real-time monitoring.",
+            "github": {
+                "name": "OPCUA App",
+                "url": "https://github.com/AnurupMondal/opcua-console-app"
+            }
+        },
+        {
+            "title": "graphApp",
+            "role": "Internship at SMS India Pvt. Ltd.",
+            "subRole": "Real-Time Sensor Data Web App",
+            "period": "2024-2024",
+            "description": "Created a Docker application using NodeJS, PostgreSQL, and React to display real-time sensor data on graphs, including historical data visualization.",
+            "github": {
+                "name": "graphApp",
+                "url": "https://github.com/AnurupMondal/graphProject"
+            }
+        },
+        {
+            "title": "IIT Hall Management System",
+            "role": "Hall Management Interface",
+            "period": "2022-2023",
+            "description": "Developed a hall management system for efficient administration.",
+            "github": {
+                "name": "IIT HMS",
+                "url": "https://github.com/AnurupMondal/IIT_HMS.git"
+            }
+        }
+    ],
+    "achievements": [
+        {
+            "title": "Web Development Back-end",
+            "organization": "1stop.ai",
+            "period": "2023-2023",
+            "description": "Certified in back-end web development using PHP",
+            "certificate": {
+                "name": "Certificate of Participation",
+                "url": "https://drive.google.com/file/d/1ruK9Ji0KTCyMEcNbX2Gi2jr-75uu6346/view?usp=sharing"
+            }
+        }
+    ],
+    "extraCurricular": [
+        {
+            "title": "Coordinator, e-Sports Organizing Team",
+            "organization": "VRIDDHI",
+            "period": "2022-2022",
+            "description": "Coordinated the core team for the Annual Sports Fest of the Institute."
+        },
+        {
+            "title": "Cadet, National Cadet Corps",
+            "organization": "NCC",
+            "period": "2021-2022",
+            "description": "Participated in camps focusing on character development, leadership, and selfless service."
+        }
+    ]
+}

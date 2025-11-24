@@ -1,9 +1,15 @@
 import { useState, useEffect } from 'react';
 
 export const useScrollSpy = (ids: string[], offset: number = 100) => {
-    const [activeId, setActiveId] = useState<string>('home');
+    const [activeId, setActiveId] = useState<string>('');
 
     useEffect(() => {
+        // If no IDs provided, don't track anything
+        if (ids.length === 0) {
+            setActiveId('');
+            return;
+        }
+
         const handleScroll = () => {
             // If we're at the very top, always show home as active
             if (window.scrollY < 100) {

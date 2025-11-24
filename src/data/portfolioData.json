@@ -202,6 +202,11 @@
         "id": 3,
         "name": "Instagram",
         "url": "https://www.instagram.com/pulsedominator/"
+      },
+      {
+        "id": 4,
+        "name": "LeetCode",
+        "url": "https://leetcode.com/anurup75"
       }
     ]
   },
