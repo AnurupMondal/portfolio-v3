@@ -4,6 +4,7 @@ import { Menu, X, Sun, Moon, Github, Linkedin } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollSpy } from "../hooks/useScrollSpy";
+import portfolioData from "../data/portfolioData.json";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,11 +62,10 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled
+      className={`fixed w-full z-50 transition-all duration-300 ${scrolled
           ? "bg-background/80 backdrop-blur-md border-b border-white/10 dark:border-white/10 border-black/5 py-2"
           : "bg-transparent py-4"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -85,11 +85,10 @@ const Navbar: React.FC = () => {
                 key={link.name}
                 href={link.path}
                 onClick={(e) => handleLinkClick(e, link.path, link.id)}
-                className={`text-sm font-medium transition-colors hover:text-primary relative ${
-                  activeId === link.id
+                className={`text-sm font-medium transition-colors hover:text-primary relative ${activeId === link.id
                     ? "text-primary"
                     : "text-gray-600 dark:text-gray-300"
-                }`}
+                  }`}
               >
                 {link.name}
                 {activeId === link.id && (
@@ -110,7 +109,7 @@ const Navbar: React.FC = () => {
                 {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
               </button>
               <a
-                href="https://github.com"
+                href={portfolioData.personalInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
@@ -118,7 +117,7 @@ const Navbar: React.FC = () => {
                 <Github size={20} />
               </a>
               <a
-                href="https://linkedin.com"
+                href={portfolioData.personalInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
@@ -161,18 +160,17 @@ const Navbar: React.FC = () => {
                   key={link.name}
                   href={link.path}
                   onClick={(e) => handleLinkClick(e, link.path, link.id)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium ${
-                    activeId === link.id
+                  className={`block px-3 py-2 rounded-md text-base font-medium ${activeId === link.id
                       ? "text-primary bg-primary/10 dark:bg-white/5"
                       : "text-foreground dark:text-gray-300 hover:text-primary dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
-                  }`}
+                    }`}
                 >
                   {link.name}
                 </a>
               ))}
               <div className="flex space-x-4 px-3 py-4 border-t border-gray-200 dark:border-white/10 mt-4">
                 <a
-                  href="https://github.com"
+                  href={portfolioData.personalInfo.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground dark:text-gray-300 hover:text-primary"
@@ -180,7 +178,7 @@ const Navbar: React.FC = () => {
                   <Github size={24} />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href={portfolioData.personalInfo.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground dark:text-gray-300 hover:text-primary"

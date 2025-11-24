@@ -7,6 +7,7 @@ import {
     useVelocity,
 } from "framer-motion";
 import portfolioData from "../data/portfolioData.json";
+import { getTechIcon } from "../utils/techIcons";
 
 const CARD_WIDTH = 500;
 const CARD_HALF = CARD_WIDTH / 2;
@@ -59,14 +60,31 @@ const Experience: React.FC = () => {
     return (
         <section ref={targetRef} id="experience" className="relative h-[300vh]">
             <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-                <div className="absolute top-20 left-8 z-10 pointer-events-none">
-                    <h2 className="text-3xl md:text-5xl font-bold text-foreground dark:text-white mb-4">
-                        Experience <span className="text-primary">.</span>
-                    </h2>
-                    <p className="text-muted-foreground dark:text-gray-400 max-w-md">
-                        My professional journey and career milestones.
-                        Scroll down to explore.
-                    </p>
+                <div className="absolute top-12 left-4 md:top-24 md:left-12 z-10 pointer-events-none mix-blend-difference dark:mix-blend-normal">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                    >
+                        <h2 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 relative">
+                            <span className="absolute -inset-1 blur-2xl bg-primary/20 rounded-full opacity-0 dark:opacity-50" />
+                            <span className="relative bg-gradient-to-br from-foreground via-foreground/80 to-foreground/40 dark:from-white dark:via-white/90 dark:to-white/40 bg-clip-text text-transparent">
+                                Experience
+                            </span>
+                            <span className="text-primary relative">.</span>
+                        </h2>
+
+                        <div className="relative pl-6 border-l-4 border-primary/50 backdrop-blur-sm bg-background/20 dark:bg-black/20 p-4 rounded-r-xl">
+                            <p className="text-lg md:text-xl text-muted-foreground dark:text-gray-300 font-light leading-relaxed">
+                                A timeline of my professional journey and key milestones.
+                            </p>
+                            <div className="mt-4 flex items-center gap-2 text-sm font-mono text-primary/80">
+                                <span className="animate-pulse">→</span>
+                                <span>Scroll to explore</span>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
 
                 {/* Timeline scroll container */}
@@ -83,15 +101,16 @@ const Experience: React.FC = () => {
                                         <div className="absolute bottom-[-12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[12px] border-t-gray-200 dark:border-t-white/10" />
                                         <h3 className="text-xl font-bold text-foreground dark:text-white mb-1">{job.role}</h3>
                                         <h4 className="text-lg text-primary mb-3">{job.company}</h4>
-                                        <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                                        <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
                                             {job.description}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {job.technologies.slice(0, 3).map((tech) => (
                                                 <span
                                                     key={tech}
-                                                    className="text-xs px-2 py-1 bg-white/50 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300"
+                                                    className="flex items-center gap-1.5 text-xs px-2.5 py-1 bg-white/50 dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-colors cursor-default"
                                                 >
+                                                    {getTechIcon(tech)}
                                                     {tech}
                                                 </span>
                                             ))}
@@ -119,15 +138,16 @@ const Experience: React.FC = () => {
                                         <div className="absolute top-[-12px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-b-[12px] border-b-gray-200 dark:border-b-white/10" />
                                         <h3 className="text-xl font-bold text-foreground dark:text-white mb-1">{job.role}</h3>
                                         <h4 className="text-lg text-primary mb-3">{job.company}</h4>
-                                        <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                                        <p className="text-muted-foreground dark:text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
                                             {job.description}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {job.technologies.slice(0, 3).map((tech) => (
                                                 <span
                                                     key={tech}
-                                                    className="text-xs px-2 py-1 bg-white/50 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300"
+                                                    className="flex items-center gap-1.5 text-xs px-2.5 py-1 bg-white/50 dark:bg-white/5 rounded-full border border-gray-200 dark:border-white/5 text-gray-700 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-white/10 transition-colors cursor-default"
                                                 >
+                                                    {getTechIcon(tech, "text-sm")}
                                                     {tech}
                                                 </span>
                                             ))}
