@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Trophy, ChevronRight, Star, Zap, Target, Swords, Car, MonitorPlay } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import gamerVideosData from '../data/gamerVideos.json';
@@ -94,9 +94,7 @@ const GamerPage = () => {
     const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedGame, setSelectedGame] = useState<string | null>(null);
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({ target: containerRef });
-    const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+
 
     useEffect(() => {
         const loadVideos = async () => {
@@ -143,7 +141,7 @@ const GamerPage = () => {
                 <meta name="description" content="Futuristic gaming portfolio featuring Valorant, Marvel Rivals, and more." />
             </Helmet>
 
-            <div ref={containerRef} className="min-h-screen bg-[#050505] text-white relative overflow-x-hidden font-sans selection:bg-purple-500/30">
+            <div className="min-h-screen bg-[#050505] text-white relative overflow-x-hidden font-sans selection:bg-purple-500/30">
 
                 {/* Background Image with Overlay */}
                 <div className="fixed inset-0 z-0">
