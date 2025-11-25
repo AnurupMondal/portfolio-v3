@@ -32,9 +32,8 @@ const Certificates: React.FC = () => {
       subtitle="Continuous Learning & Achievement"
     >
       <div
-        className={`flex flex-wrap justify-center gap-8 ${
-          certificateCount === 1 ? "max-w-md mx-auto" : ""
-        }`}
+        className={`flex flex-wrap justify-center gap-8 ${certificateCount === 1 ? "max-w-md mx-auto" : ""
+          }`}
       >
         {certificates.map((cert, index) => (
           <motion.div
@@ -43,16 +42,16 @@ const Certificates: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.5 }}
-            className={`group relative bg-white/60 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors ${
-              certificateCount === 1
+            className={`group relative bg-white/60 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl overflow-hidden hover:border-primary/50 transition-colors ${certificateCount === 1
                 ? "w-full max-w-md"
                 : "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.33rem)]"
-            }`}
+              }`}
           >
             <div className="aspect-video overflow-hidden">
               <img
                 src={getPreviewImage(cert.link, cert.image)}
                 alt={cert.title}
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 onError={(e) => {
                   // Fallback to original image if preview fails

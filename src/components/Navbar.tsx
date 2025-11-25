@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
     // Check if we're on the resume page
     const isOnResumePage = location.pathname.includes('/resume');
 
-    if (isOnResumePage || location.pathname !== "/") {
+    if (isOnResumePage || !isOnHomePage) {
       // Navigate to home first, then scroll
       navigate("/");
       setTimeout(() => {
@@ -59,12 +59,14 @@ const Navbar: React.FC = () => {
       }, 100);
     } else {
       // Already on home page, just scroll
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 100);
     }
   };
 

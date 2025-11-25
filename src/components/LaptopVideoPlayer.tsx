@@ -74,7 +74,7 @@ const LaptopVideoPlayer = ({ videos }: LaptopVideoPlayerProps) => {
     };
 
     return (
-        <div className="relative w-full min-h-screen flex flex-col items-center justify-center py-20 px-4">
+        <div className="relative w-full min-h-screen flex flex-col items-center justify-center py-12 md:py-20 px-4">
             {/* Main Laptop Container */}
             <div className="relative w-full max-w-5xl perspective-[2000px]">
                 {/* Laptop Lid (Screen) */}
@@ -91,7 +91,7 @@ const LaptopVideoPlayer = ({ videos }: LaptopVideoPlayerProps) => {
                         <div className="relative bg-black rounded-t-[16px] overflow-hidden aspect-[16/10] ring-1 ring-white/10">
 
                             {/* The Notch */}
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[160px] h-[24px] bg-black z-50 rounded-b-[12px] flex items-center justify-center">
+                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[120px] md:w-[160px] h-[18px] md:h-[24px] bg-black z-50 rounded-b-[8px] md:rounded-b-[12px] flex items-center justify-center">
                                 {/* Camera Lens */}
                                 <div className="w-2 h-2 rounded-full bg-[#1a1a1a] border border-[#333] shadow-inner" />
                                 <div className="w-1 h-1 rounded-full bg-blue-900/50 ml-2" />

@@ -70,10 +70,10 @@ const Hero: React.FC = () => {
 
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
                     {/* Left Column - Sticky Intro */}
-                    <div className="lg:col-span-5 lg:sticky lg:top-32 flex flex-col items-center lg:items-start text-center lg:text-left">
+                    <div className="lg:col-span-5 lg:sticky lg:top-24 flex flex-col items-center lg:items-start text-center lg:text-left">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.5 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -118,7 +118,7 @@ const Hero: React.FC = () => {
                                 </span>
                             </motion.div>
 
-                            <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-bold font-heading tracking-tight mb-6 leading-tight text-gray-900 dark:text-white">
+                            <motion.h1 variants={itemVariants} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold font-heading tracking-tight mb-6 leading-tight text-gray-900 dark:text-white">
                                 Hi, I'm <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-secondary animate-gradient-x drop-shadow-sm">
                                     {displayName}
