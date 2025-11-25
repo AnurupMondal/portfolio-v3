@@ -1,11 +1,64 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Award, Gamepad2, Trophy } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Trophy, ChevronRight, Star, Zap, Target, Swords, Car, MonitorPlay } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import gamerVideosData from '../data/gamerVideos.json';
 import LaptopVideoPlayer, { type Video } from '../components/LaptopVideoPlayer';
+import gamingBg from '../assets/gaming-bg.png';
 
-// Helper function to extract YouTube video ID from URL
+// Game Data with Themes
+const GAMES = [
+    {
+        id: 'valorant',
+        name: 'VALORANT',
+        color: '#FF4655',
+        icon: Target,
+        description: 'Tactical 5v5 Shooter',
+        gradient: 'from-[#FF4655] to-[#111]'
+    },
+    {
+        id: 'marvel-rivals',
+        name: 'MARVEL RIVALS',
+        color: '#F0B132',
+        icon: Zap,
+        description: 'Super Hero Team-Based PvP',
+        gradient: 'from-[#F0B132] to-[#4A2C00]'
+    },
+    {
+        id: 'genshin',
+        name: 'GENSHIN IMPACT',
+        color: '#4E7CFF',
+        icon: Star,
+        description: 'Open-World Action RPG',
+        gradient: 'from-[#4E7CFF] to-[#1A2B55]'
+    },
+    {
+        id: 'f1-2026',
+        name: 'F1 2026',
+        color: '#E10600',
+        icon: Car,
+        description: 'Next Gen Racing Simulation',
+        gradient: 'from-[#E10600] to-[#000]'
+    },
+    {
+        id: 'fifa-2025',
+        name: 'FIFA 2025',
+        color: '#32CD32',
+        icon: Trophy,
+        description: 'The World\'s Game',
+        gradient: 'from-[#32CD32] to-[#0B3B0B]'
+    },
+    {
+        id: 'cs2',
+        name: 'COUNTER STRIKE 2',
+        color: '#F49D1A',
+        icon: Swords,
+        description: 'Premier Tactical Shooter',
+        gradient: 'from-[#F49D1A] to-[#2D2D2D]'
+    }
+];
+
+// Helper function to extract YouTube video ID
 const getYouTubeVideoId = (url: string): string | null => {
     const patterns = [
         /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
@@ -14,62 +67,46 @@ const getYouTubeVideoId = (url: string): string | null => {
 
     for (const pattern of patterns) {
         const match = url.match(pattern);
-        if (match && match[1]) {
-            return match[1];
-        }
+        if (match && match[1]) return match[1];
     }
     return null;
 };
 
-// Fetch video metadata using oEmbed API
+// Fetch video metadata
 const fetchVideoMetadata = async (videoId: string): Promise<{ title: string; uploadDate: string } | null> => {
     try {
         const response = await fetch(
             `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
         );
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch video metadata');
-        }
-
+        if (!response.ok) throw new Error('Failed');
         const data = await response.json();
-
         return {
             title: data.title || 'Untitled Video',
             uploadDate: new Date().toISOString().split('T')[0],
         };
     } catch (error) {
-        console.error('Error fetching video metadata:', error);
         return null;
     }
 };
 
 const GamerPage = () => {
     const [videos, setVideos] = useState<Video[]>([]);
+    const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedGame, setSelectedGame] = useState<string | null>(null);
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({ target: containerRef });
+    const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
     useEffect(() => {
-        // Load videos from JSON and fetch metadata
         const loadVideos = async () => {
             setIsLoading(true);
             const videosWithMetadata = await Promise.all(
                 gamerVideosData.videos.map(async (video) => {
                     const youtubeId = getYouTubeVideoId(video.url);
+                    if (!youtubeId) return { ...video, title: 'Invalid', uploadDate: '', loading: false, id: video.id, youtubeId: '' };
 
-                    if (!youtubeId) {
-                        return {
-                            id: video.id,
-                            url: video.url,
-                            title: 'Invalid Video',
-                            game: video.game,
-                            uploadDate: new Date().toISOString().split('T')[0],
-                            loading: false,
-                        };
-                    }
-
-                    // Fetch metadata from YouTube
                     const metadata = await fetchVideoMetadata(youtubeId);
-
                     return {
                         id: video.id,
                         url: video.url,
@@ -82,250 +119,166 @@ const GamerPage = () => {
                     };
                 })
             );
-
             setVideos(videosWithMetadata);
+            setFilteredVideos(videosWithMetadata);
             setIsLoading(false);
         };
-
         loadVideos();
     }, []);
+
+    useEffect(() => {
+        if (selectedGame) {
+            // Filter videos loosely based on game name (case insensitive)
+            const filtered = videos.filter(v => v.game?.toLowerCase().includes(selectedGame.replace(/-/g, ' ').split(' ')[0].toLowerCase()));
+            setFilteredVideos(filtered.length > 0 ? filtered : videos); // Fallback to all if none found
+        } else {
+            setFilteredVideos(videos);
+        }
+    }, [selectedGame, videos]);
 
     return (
         <>
             <Helmet>
-                <title>Gaming Archive - Secret Vault</title>
-                <meta name="description" content="My secret gaming archive" />
+                <title>Gamer Vault | Next-Gen Archive</title>
+                <meta name="description" content="Futuristic gaming portfolio featuring Valorant, Marvel Rivals, and more." />
             </Helmet>
 
-            <div className="min-h-screen bg-gradient-to-br from-[#0a0e27] via-[#1a1f3a] to-[#0a0e27] relative overflow-hidden" style={{ isolation: 'isolate' }}>
-                {/* Enhanced Animated Background */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-                    {/* Multiple Glowing Orbs */}
-                    <motion.div
-                        className="absolute top-20 right-20 w-96 h-96 rounded-full blur-[120px]"
-                        style={{ background: 'radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%)' }}
-                        animate={{
-                            scale: [1, 1.3, 1],
-                            opacity: [0.3, 0.6, 0.3],
-                            x: [0, 50, 0],
-                            y: [0, -30, 0],
-                        }}
-                        transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                        }}
-                    />
+            <div ref={containerRef} className="min-h-screen bg-[#050505] text-white relative overflow-x-hidden font-sans selection:bg-purple-500/30">
 
-                    <motion.div
-                        className="absolute bottom-40 left-20 w-80 h-80 rounded-full blur-[100px]"
-                        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%)' }}
-                        animate={{
-                            scale: [1.2, 1, 1.2],
-                            opacity: [0.4, 0.7, 0.4],
-                            x: [0, -40, 0],
-                            y: [0, 40, 0],
-                        }}
-                        transition={{
-                            duration: 10,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                        }}
+                {/* Background Image with Overlay */}
+                <div className="fixed inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/80 to-[#050505] z-10" />
+                    <img
+                        src={gamingBg}
+                        alt="Background"
+                        className="w-full h-full object-cover opacity-40 scale-105"
                     />
-
-                    <motion.div
-                        className="absolute top-1/2 left-1/2 w-72 h-72 rounded-full blur-[90px]"
-                        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%)' }}
-                        animate={{
-                            scale: [1, 1.4, 1],
-                            opacity: [0.2, 0.5, 0.2],
-                            rotate: [0, 180, 360],
-                        }}
-                        transition={{
-                            duration: 15,
-                            repeat: Infinity,
-                            ease: 'linear',
-                        }}
-                    />
-
-                    {/* Enhanced Grid Pattern with Animation */}
-                    <motion.div
-                        className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"
-                        animate={{
-                            opacity: [0.15, 0.25, 0.15],
-                        }}
-                        transition={{
-                            duration: 5,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                        }}
-                    />
-
-                    {/* Floating Particles */}
-                    {[...Array(20)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="absolute w-1 h-1 bg-purple-400/30 rounded-full"
-                            style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                            }}
-                            animate={{
-                                y: [0, -100, 0],
-                                opacity: [0, 1, 0],
-                            }}
-                            transition={{
-                                duration: 3 + Math.random() * 4,
-                                repeat: Infinity,
-                                delay: Math.random() * 5,
-                                ease: 'easeInOut',
-                            }}
-                        />
-                    ))}
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 z-20 mix-blend-overlay"></div>
                 </div>
 
-                <div className="relative container mx-auto px-4 py-12" style={{ zIndex: 10 }}>
-                    {/* Enhanced Header */}
+                <div className="relative z-10 container mx-auto px-4 py-20">
+
+                    {/* Navigation */}
+                    <motion.a
+                        href="/portfolio-v3/"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="absolute top-8 left-4 md:left-0 flex items-center gap-2 text-gray-400 hover:text-white transition-colors group"
+                    >
+                        <div className="p-2 rounded-full bg-white/5 group-hover:bg-white/10 border border-white/10 transition-colors">
+                            <ChevronRight className="w-4 h-4 rotate-180" />
+                        </div>
+                        <span className="text-sm font-mono tracking-wider">EXIT VAULT</span>
+                    </motion.a>
+
+                    {/* Header Section */}
                     <motion.div
-                        initial={{ opacity: 0, y: -50 }}
+                        initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-center mb-16"
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="text-center mb-24"
                     >
                         <motion.div
-                            className="flex items-center justify-center gap-4 mb-6"
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                        >
-                            <motion.div
-                                animate={{
-                                    rotate: [0, 10, -10, 0],
-                                    scale: [1, 1.1, 1],
-                                }}
-                                transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    ease: 'easeInOut',
-                                }}
-                            >
-                                <Gamepad2 className="w-14 h-14" style={{ color: '#8b5cf6' }} />
-                            </motion.div>
-
-                            <h1 className="text-7xl font-black tracking-wider relative">
-                                <motion.span
-                                    className="bg-clip-text text-transparent bg-gradient-to-r from-[#8b5cf6] via-[#3b82f6] to-[#06b6d4]"
-                                    animate={{
-                                        backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                                    }}
-                                    transition={{
-                                        duration: 5,
-                                        repeat: Infinity,
-                                        ease: 'linear',
-                                    }}
-                                    style={{
-                                        backgroundSize: '200% 200%',
-                                    }}
-                                >
-                                    GAMER VAULT
-                                </motion.span>
-                                <motion.span
-                                    className="absolute -top-3 -right-14 text-xs font-normal px-2 py-1 rounded-full backdrop-blur-sm"
-                                    style={{
-                                        color: '#ffffff',
-                                        backgroundColor: 'rgba(139, 92, 246, 0.3)',
-                                        border: '1px solid rgba(139, 92, 246, 0.5)',
-                                    }}
-                                    animate={{
-                                        opacity: [0.5, 1, 0.5],
-                                        scale: [0.95, 1.05, 0.95],
-                                    }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                >
-                                    TOP SECRET
-                                </motion.span>
-                            </h1>
-
-                            <motion.div
-                                animate={{
-                                    rotate: [0, -10, 10, 0],
-                                    scale: [1, 1.1, 1],
-                                }}
-                                transition={{
-                                    duration: 3,
-                                    repeat: Infinity,
-                                    ease: 'easeInOut',
-                                    delay: 0.5,
-                                }}
-                            >
-                                <Trophy className="w-14 h-14" style={{ color: '#3b82f6' }} />
-                            </motion.div>
-                        </motion.div>
-
-                        <motion.p
-                            className="text-xl font-mono mb-6"
-                            style={{ color: '#9ca3af' }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                        >
-              // EPIC MOMENTS ARCHIVE
-                        </motion.p>
-
-                        <motion.div
-                            className="inline-flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md"
-                            style={{
-                                backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                                border: '1px solid rgba(139, 92, 246, 0.3)',
-                            }}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.5 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6"
                             whileHover={{ scale: 1.05 }}
                         >
-                            <Award className="w-6 h-6" style={{ color: '#8b5cf6' }} />
-                            <span className="text-lg font-bold" style={{ color: '#ffffff' }}>
-                                {videos.length} EPIC CLIPS
-                            </span>
+                            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            <span className="text-xs font-mono tracking-widest text-gray-400">SYSTEM ONLINE</span>
                         </motion.div>
+
+                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-gray-500">
+                            GAMER<span className="text-purple-500">.</span>VAULT
+                        </h1>
+                        <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                            A curated collection of elite gameplay moments across the metaverse.
+                            <br />
+                            <span className="text-purple-400 font-mono text-sm mt-2 block">SELECT A FREQUENCY TO TUNE IN</span>
+                        </p>
                     </motion.div>
 
-                    {/* Loading State */}
-                    {isLoading && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-center py-20"
-                        >
+                    {/* Featured Games Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-32">
+                        {GAMES.map((game, index) => (
                             <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                                key={game.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.1 }}
+                                onClick={() => setSelectedGame(selectedGame === game.id ? null : game.id)}
+                                className={`group relative h-64 rounded-3xl overflow-hidden cursor-pointer border border-white/5 transition-all duration-500 ${selectedGame === game.id ? 'ring-2 ring-offset-2 ring-offset-black' : 'hover:scale-[1.02]'}`}
+                                style={{
+                                    '--game-color': game.color
+                                } as any}
                             >
-                                <Gamepad2 className="w-16 h-16 mx-auto mb-4" style={{ color: '#8b5cf6' }} />
+                                {/* Card Background Gradient */}
+                                <div className={`absolute inset-0 bg-gradient-to-br ${game.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
+
+                                {/* Hover Glow */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+
+                                {/* Content */}
+                                <div className="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                                    <div className="flex justify-between items-start">
+                                        <game.icon
+                                            className="w-10 h-10 text-white/50 group-hover:text-white transition-colors duration-300"
+                                            strokeWidth={1.5}
+                                        />
+                                        <motion.div
+                                            className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                                            whileHover={{ rotate: 90 }}
+                                        >
+                                            <ChevronRight className="w-5 h-5" />
+                                        </motion.div>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-3xl font-bold text-white mb-2 tracking-wide group-hover:translate-x-2 transition-transform duration-300">
+                                            {game.name}
+                                        </h3>
+                                        <p className="text-sm text-gray-400 font-mono border-l-2 border-transparent group-hover:border-[var(--game-color)] pl-0 group-hover:pl-3 transition-all duration-300">
+                                            {game.description}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Animated Border Gradient on Hover */}
+                                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[var(--game-color)] rounded-3xl opacity-0 group-hover:opacity-50 transition-all duration-500" />
                             </motion.div>
-                            <p className="text-xl font-mono" style={{ color: '#6b7280' }}>
-                                Loading epic moments...
-                            </p>
-                        </motion.div>
-                    )}
+                        ))}
+                    </div>
 
-                    {/* Laptop Video Player */}
-                    {!isLoading && videos.length > 0 && (
-                        <LaptopVideoPlayer videos={videos} />
-                    )}
+                    {/* Video Section */}
+                    <motion.div
+                        layout
+                        className="relative"
+                    >
+                        <div className="flex items-center gap-4 mb-12">
+                            <MonitorPlay className="w-8 h-8 text-purple-500" />
+                            <h2 className="text-3xl font-bold">
+                                {selectedGame ? `ARCHIVES: ${GAMES.find(g => g.id === selectedGame)?.name}` : 'RECENT TRANSMISSIONS'}
+                            </h2>
+                            <div className="h-px flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
+                        </div>
 
-                    {/* Empty State */}
-                    {!isLoading && videos.length === 0 && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="text-center py-20"
-                        >
-                            <Gamepad2 className="w-24 h-24 mx-auto mb-4" style={{ color: '#374151' }} />
-                            <p className="text-xl font-mono" style={{ color: '#6b7280' }}>
-                                No epic moments yet. Time to showcase your skills!
-                            </p>
-                        </motion.div>
-                    )}
+                        {isLoading ? (
+                            <div className="flex justify-center py-20">
+                                <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                            </div>
+                        ) : filteredVideos.length > 0 ? (
+                            <LaptopVideoPlayer videos={filteredVideos} />
+                        ) : (
+                            <div className="text-center py-20 border border-dashed border-white/10 rounded-3xl bg-white/5">
+                                <p className="text-gray-400 font-mono">NO DATA FOUND IN THIS SECTOR</p>
+                                <button
+                                    onClick={() => setSelectedGame(null)}
+                                    className="mt-4 text-purple-400 hover:text-purple-300 underline underline-offset-4"
+                                >
+                                    Return to Main Database
+                                </button>
+                            </div>
+                        )}
+                    </motion.div>
+
                 </div>
             </div>
         </>
